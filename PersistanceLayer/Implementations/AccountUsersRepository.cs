@@ -24,22 +24,29 @@ namespace Persistance.Implementations
             return takenByOther;
         }
 
-        public async Task<(bool Success, bool Created, string? Error, AccountUser? AccountUserResult)> UpsertAsync(Guid accountId, string? username, CancellationToken ct)
+        public async Task<(bool Success, bool Created, string? Error, AccountUser? AccountUserResult)> UpsertAsync(string username, Guid? accountId, CancellationToken ct)
         {
             await using var tx = await _context.Database.BeginTransactionAsync(ct);
 
-            var existing = await _context.AccountUsers.SingleOrDefaultAsync(x => x.AccountId == accountId, ct);
-
+            AccountUser? existing = null;
             bool created;
-            if (existing is null)
+
+            if (accountId != null)
             {
-                _context.AccountUsers.Add(new AccountUser(username!));
-                created = true;
+                existing = await _context.AccountUsers.FirstOrDefaultAsync(x => x.AccountId == accountId, ct);
+
+                if (existing == null)
+                    return (false, false, "Account not found.", null);
+
+                existing.SetUsername(username);
+                created = false;
+
             }
             else
             {
-                existing.SetUsername(username!);
-                created = false;
+                existing = new AccountUser(username);
+                _context.AccountUsers.Add(existing);
+                created = true;
             }
 
             try
