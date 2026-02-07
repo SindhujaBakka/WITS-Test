@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Persistance;
 using Persistance.Contracts;
 using Persistance.Implementations;
@@ -34,6 +35,11 @@ namespace WITS_Test
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             services.AddCors();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WITS-Test", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +48,8 @@ namespace WITS_Test
             //if (env.IsDevelopment())
             //{
             //    app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WITS-Test"));
             //}
             app.UseMiddleware<ExceptionMiddleware>();
 
