@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Persistance;
+using Persistance.SeedData;
 using WITS_Test;
 
 
@@ -13,8 +15,8 @@ public class Program
         {
             var context = services.GetRequiredService<DataContext>();
             await context.Database.EnsureDeletedAsync();
-            //await context.Database.MigrateAsync();
-            //await Seed.SeedMovies(context);
+            await context.Database.MigrateAsync();
+            await Seed.SeedAccountUsers(context);
         }
         catch (Exception ex)
         {
