@@ -11,26 +11,11 @@ namespace Persistance.SeedData
 
             var users = new List<AccountUser>
             {
-                new AccountUser(
-                    name: "Alice Smith",
-                    email: "alice@test.com",
-                    password: "Password@123",
-                    username: "Alice01"
-                ),
+                new AccountUser(username: "Alice01" ),
 
-                new AccountUser(
-                    name: "Bob Johnson",
-                    email: "bob@test.com",
-                    password: "Password@123",
-                    username: "BobUser99"
-                ),
+                new AccountUser(username: "BobUser99"),
 
-                new AccountUser(
-                    name: "Charlie Brown",
-                    email: "charlie@test.com",
-                    password: "Password@123",
-                    username: "Charlie7"
-                )
+                new AccountUser(username: "Charlie7")
             };
 
             await context.AccountUsers.AddRangeAsync(users);

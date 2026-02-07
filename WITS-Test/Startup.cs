@@ -1,5 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistance;
+using Persistance.Contracts;
+using Persistance.Implementations;
+using Services.Contracts;
+using Services.Implementations;
+using Services.Profiles;
 using WITS_Test.Middlewares;
 
 namespace WITS_Test
@@ -23,8 +28,10 @@ namespace WITS_Test
                 options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
 
-            //services.AddTransient<IMovieRepository, MovieRepository>();
-            //services.AddScoped<IMovieAction, MovieAction>();
+            services.AddTransient<IAccountUsersRepository, AccountUsersRepository>();
+            services.AddScoped<IAccountUsersService, AccountUsersService>();
+
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             services.AddCors();
         }

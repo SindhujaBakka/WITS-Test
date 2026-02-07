@@ -29,18 +29,6 @@ namespace Persistance.Migrations
                     b.Property<DateTimeOffset>("CreateDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTimeOffset>("UpdatedDateTime")
                         .HasColumnType("TEXT");
 

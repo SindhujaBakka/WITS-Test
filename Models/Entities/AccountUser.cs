@@ -7,15 +7,6 @@ namespace Models.Entities
         public Guid Id { get; set; }
 
         [Required]
-        public string Name { get; set; } = default!;
-
-        [Required]
-        public string Email { get; set; } = default!;
-
-        [Required]
-        public string Password { get; set; } = default!;
-
-        [Required]
         public Guid AccountId { get; private set; }
 
         [Required]
@@ -32,18 +23,10 @@ namespace Models.Entities
 
         private AccountUser() { }
 
-        public AccountUser(
-            string name,
-            string email,
-            string password,
-            string username)
+        public AccountUser(string username)
         {
             Id = Guid.NewGuid();
             AccountId = Guid.NewGuid();
-
-            Name = name;
-            Email = email;
-            Password = password;
 
             SetUsername(username);
 
