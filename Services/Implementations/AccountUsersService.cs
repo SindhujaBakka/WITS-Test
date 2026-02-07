@@ -17,6 +17,12 @@ namespace Services.Implementations
             _mapper = mapper;
         }
 
+        public async Task<List<AccountUserDto>> GetAccountUsers(CancellationToken ct)
+        {
+            var users = await _accountUsersRepo.GetAccountUsersAsync(ct);
+            return _mapper.Map<List<AccountUserDto>>(users);
+        }
+
         public async Task<(bool IsValidFormat, bool IsAvailable, List<string> Errors)> ValidateAccountUser(string username, CancellationToken ct)
         {
             var (isValid, errors) = UsernameRules.Validate(username);

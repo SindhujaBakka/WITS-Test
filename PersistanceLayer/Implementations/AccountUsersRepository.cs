@@ -13,10 +13,13 @@ namespace Persistance.Implementations
             _context = context;
         }
 
+        public async Task<List<AccountUser>> GetAccountUsersAsync(CancellationToken ct)
+        {
+            return await _context.AccountUsers.AsNoTracking().ToListAsync(ct);
+        }
+
         public async Task<bool> HasUsernameExistAsync(string username, CancellationToken ct)
         {
-            await using var tx = await _context.Database.BeginTransactionAsync(ct);
-
             var takenByOther = await _context.AccountUsers
                 .AsNoTracking()
                 .AnyAsync(x => x.UsernameNormalized == username.ToUpperInvariant(), ct);

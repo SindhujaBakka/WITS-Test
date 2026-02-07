@@ -12,6 +12,12 @@ namespace WITS_Test.Controllers
 
         public AccountUsersController(IAccountUsersService service) => _service = service;
 
+        [HttpGet()]
+        public async Task<IActionResult> GetAccountUsers(CancellationToken ct)
+        {
+            return Ok(await _service.GetAccountUsers(ct));
+        }
+
         [HttpGet("validate")]
         public async Task<IActionResult> Validate([FromQuery] string? username, CancellationToken ct)
         {
