@@ -13,11 +13,19 @@ namespace Persistance.Implementations
             _context = context;
         }
 
+        /// <summary>
+        /// Gets all user entries present in database
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<AccountUser>> GetAccountUsersAsync(CancellationToken ct)
         {
             return await _context.AccountUsers.AsNoTracking().ToListAsync(ct);
         }
 
+        /// <summary>
+        /// Checks if the username already present in database or not.
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> HasUsernameExistAsync(string username, CancellationToken ct)
         {
             var takenByOther = await _context.AccountUsers
@@ -27,6 +35,10 @@ namespace Persistance.Implementations
             return takenByOther;
         }
 
+        /// <summary>
+        /// Inserts ot Updates the USER entry.
+        /// </summary>
+        /// <returns></returns>
         public async Task<(bool Success, bool Created, string? Error, AccountUser? AccountUserResult)> UpsertAsync(string username, Guid? accountId, CancellationToken ct)
         {
             await using var tx = await _context.Database.BeginTransactionAsync(ct);

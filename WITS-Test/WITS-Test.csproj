@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>WITS_Test</RootNamespace>
+    <UserSecretsId>ca33d829-a08c-4a21-96ca-be8b6c228cce</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

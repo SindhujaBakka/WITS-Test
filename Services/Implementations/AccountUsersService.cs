@@ -17,12 +17,21 @@ namespace Services.Implementations
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets all the User entries present in database
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<AccountUserDto>> GetAccountUsers(CancellationToken ct)
         {
             var users = await _accountUsersRepo.GetAccountUsersAsync(ct);
             return _mapper.Map<List<AccountUserDto>>(users);
         }
 
+        /// <summary>
+        /// Method to validate the User Name
+        /// </summary>
+        /// <param name="username">Username to be validated</param>
+        /// <returns></returns>
         public async Task<(bool IsValidFormat, bool IsAvailable, List<string> Errors)> ValidateAccountUser(string username, CancellationToken ct)
         {
             var (isValid, errors) = UsernameRules.Validate(username);
@@ -34,6 +43,12 @@ namespace Services.Implementations
             return (true, !exists, errors);
         }
 
+        /// <summary>
+        /// Inserts or Updates the User Record
+        /// </summary>
+        /// <param name="username">User Name to be inserted</param>
+        /// <param name="accountId">Account ID</param>
+        /// <returns></returns>
         public async Task<(bool Success, bool Created, string? Error, AccountUserDto? Result)> UpsertAccountUser(string username, Guid? accountId, CancellationToken ct)
         {
             var (isValid, errors) = UsernameRules.Validate(username);
